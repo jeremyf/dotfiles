@@ -1,0 +1,32 @@
+# shortcut to this dotfiles path is $DOTFILES
+export DOTFILES=$HOME/Repositories/dotfiles
+
+# your project folder that we can `c [tab]` to
+export REPOSITORIES=~/Repositories
+
+# Use .localrc for secret information that you don't want in your public
+# versioned repo.
+if [[ -a $HOME/.localrc ]]; then source $HOME/.localrc; fi
+
+# all of our bash files
+config_files="$DOTFILES/**/*.bash"
+
+# load the path files
+for file in $config_files
+do
+  [[ $file == */path.bash ]] && source $file
+done
+
+# load everything but the path and completion files
+for file in $config_files
+do
+  [[ $file != */path.bash ]] && [[ $file != */completion.bash ]] && source $file
+done
+
+# load auto-completion
+for file in $config_files
+do
+  [[ $file == */completion.bash ]] && source $file
+done
+
+unset config_files
