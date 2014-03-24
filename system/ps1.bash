@@ -1,36 +1,11 @@
-function __git_branch_info {
-  git branch -vv 2> /dev/null | grep '^*' -m1 | sed -En "s/ +/ /pg" | cut -d ' ' -f 2,3 2> /dev/null
-}
-function parse_git_branch {
-  git_status="$(git status 2> /dev/null)"
-  if [[ ${git_status} == "" ]]; then
-    return
-  fi
-  remote_pattern="# Your branch is (.*) of"
-  diverge_pattern="# Your branch and (.*) have diverged"
-  git_stash="$(echo `git stash list | wc -l 2> /dev/null`)"
-  if [[ ! ${git_stash} = "0" ]]; then
-    stash="{${git_stash}§}"
-  fi
-  if [[ ! ${git_status} =~ "working directory clean" ]]; then
-    state="[⚡]"
-  fi
-  # add an else if or two here if you want to get more specific
-  if [[ ${git_status} =~ ${remote_pattern} ]]; then
-    if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
-      remote="[↑]"
-    else
-      remote="[↓]"
-    fi
-  fi
-  if [[ ${git_status} =~ ${diverge_pattern} ]]; then
-    remote="[↕]"
-  fi
-  local branch=$(__git_branch_info)
-  if [[ ! ${branch} =~ '' ]]; then
-    echo "${branch}${remote}${state}${stash} "
-  fi
-}
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWUPSTREAM="auto"
+
+if [ -a `brew --prefix`/etc/bash_completion.d/git-prompt.sh ]; then
+  source `brew --prefix`/etc/bash_completion.d/git-prompt.sh
+fi
 
 # via http://tammersaleh.com/posts/a-better-rvm-bash-prompt
 bash_prompt() {
@@ -69,7 +44,7 @@ bash_prompt() {
   local UC=$W                 # user's color
   [ $UID -eq "0" ] && UC=$R   # root's color
 
-  PS1="$G# \w $R\$(parse_git_branch)$B\$(~/.rvm/bin/rvm-prompt v p g)${NONE} $ "
+  PS1="$G# \w$R\$(__git_ps1) $B\$(~/.rvm/bin/rvm-prompt v p g)${NONE} $ "
 }
 
 bash_prompt
