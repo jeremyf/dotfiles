@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+
+# Transform Word Press blog post (via URL) into BoardGameGeek markup
+require 'rubygems'
+require 'nokogiri'
+require 'highline/import'
+require 'open-uri'
+
+conversions = [
+  ["<blockquote>", '[q]' ],
+  ["</blockquote>", '[/q]' ],
+  ["<strong>", '[b]' ],
+  ["</strong>", '[/b]' ],
+  ["<em>", '[i]' ],
+  ["</em>", '[/i]' ],
+  ["<h2>", '[size=18]' ],
+  ["</h2>", '[/size]' ],
+  ["<h3>", '[size=14]' ],
+  ["</h3>", '[/size]' ],
+  ["<li>", '<li>- ' ],
+  ["&nbsp;", ' ' ],
+  [/\<a href="([^"]*)"\>([^\<]*)\<\/a\>/, '\2 (see [url]\1[/url])'],
+]
+
+prompt_response = ask("WordPress Blog Post URL:")
+prompt_location = ask("Output Filename:") {|q| q.default = "review.txt" }
+
+uri = URI.parse(prompt_response)
+body = open(uri.to_s)
+doc = Nokogiri::HTML(body)
+
+title = doc.css('.entry-title').first.text
+
+node = doc.css('.entry-content').first
+
+node.css('#ilikeposts').each(&:unlink)
+node.css('.wpadvert').each(&:unlink)
+node.css('.sharedaddy').each(&:unlink)
+node.css('.wpa').each(&:unlink)
+node.css('script').each(&:unlink)
+node.css('footer').each(&:unlink)
+node.css('style').each(&:unlink)
+
+converted_node = Nokogiri::HTML(conversions.inject(node.inner_html) {|mem,(from,to)| mem.gsub(from,to) })
+text = converted_node.text
+
+text.gsub!(/^-\s*\n\[/,'-[')
+text.gsub!(/^([^-])/, "\n" << '\1')
+
+File.open(prompt_location, 'w+') {|file|
+  file.puts "[size=22]#{title}[/size]\n\nOriginally posted at [url]#{uri}[/url]\n\n" << text
+}
