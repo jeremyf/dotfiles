@@ -22,15 +22,39 @@ if project_name
     $stdout.puts %(  in #{File.dirname(repository_dirname)}")
     exit(-1)
   end
+
   unless File.exist?(project_file_name)
+    # Creating the default project; Note this is very much configured for a
+    # Rails project.
     File.open(project_file_name, 'w+') do |file|
       file.puts %({)
       file.puts %(  "folders":)
       file.puts %(  [)
       file.puts %(    {)
       file.puts %(      "path": "#{repository_dirname}",)
-      file.puts %(      "folder_exclude_patterns": [".yardoc", "pkg", "tags", "doc",  "coverage","tmp","jetty", ".bundle", ".yardoc"],)
-      file.puts %(      "file_exclude_patterns": [".tag*", "*.gif", "*.jpg", "tags", "*.png", ".tags", ".tags_sorted_by_file", "*.log", "*.sqlite3", "*.sql"])
+      file.puts %(      "folder_exclude_patterns": [)
+      file.puts %(        ".yardoc",)
+      file.puts %(        "pkg",)
+      file.puts %(        "tags",)
+      file.puts %(        "doc",)
+      file.puts %(        "coverage",)
+      file.puts %(        "tmp",)
+      file.puts %(        "jetty",)
+      file.puts %(        ".bundle",)
+      file.puts %(        ".yardoc")
+      file.puts %(      ],)
+      file.puts %(      "file_exclude_patterns": [)
+      file.puts %(        ".tag*",)
+      file.puts %(        "*.gif",)
+      file.puts %(        "*.jpg",)
+      file.puts %(        "tags",)
+      file.puts %(        "*.png",)
+      file.puts %(        ".tags",)
+      file.puts %(        ".tags_sorted_by_file",)
+      file.puts %(        "*.log",)
+      file.puts %(        "*.sqlite3",)
+      file.puts %(        "*.sql")
+      file.puts %(      ])
       file.puts %(    })
       file.puts %(  ],)
       file.puts %(  "settings":)
@@ -39,10 +63,11 @@ if project_name
       file.puts %(  })
       file.puts %(})
     end
+
+    # Working with the file system, I may need to wait.
     sleep(1)
   end
   `subl #{project_file_name}`
-  $stdout.puts repository_dirname
   exit(0)
 else
   $stdout.puts "Example `#{File.basename(__FILE__)} project_name`"
