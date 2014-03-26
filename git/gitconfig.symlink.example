@@ -260,3 +260,5 @@
         autosetupmerge = true
 [grep]
         extendedRegexp = true
+[core]
+        excludesfile = ~/.gitignore
