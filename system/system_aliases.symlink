@@ -21,7 +21,7 @@ alias ssh-prod='ssh rbprod@rprod.library.nd.edu'
 alias hb="hub browse"
 alias sprint="open https://github.com/ndlib/planning/issues"
 alias p="project"
-alias cspec="BUNDLE_GEMFILE=./spec/internal/Gemfile bundle exec rspec"
+alias crspec="BUNDLE_GEMFILE=./spec/internal/Gemfile bundle exec rspec"
 alias zute="zeus test"
 
 # SSH Tunnel:
