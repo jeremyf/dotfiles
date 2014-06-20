@@ -23,6 +23,7 @@ alias sprint="open https://github.com/ndlib/planning/issues"
 alias p="project"
 alias crspec="BUNDLE_GEMFILE=./spec/internal/Gemfile bundle exec rspec"
 alias zute="zeus test"
+alias rspec-diff="git status --porcelain spec/ | awk '{ print \$2}' | xargs rspec"
 
 # SSH Tunnel:
 # ssh libvirt6.library.nd.edu -L 8080:localhost:8080
