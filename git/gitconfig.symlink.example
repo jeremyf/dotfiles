@@ -9,6 +9,8 @@
         helper = GIT_CREDENTIAL_HELPER
 [github]
         user = GITHUB_USERNAME
+[url "git@github.com:GITHUB_USERNAME/"]
+        insteadOf = "git://github.com/GITHUB_USERNAME/"
 [hub]
         protocol = https
 [alias]
@@ -18,11 +20,12 @@
         forget = update-index --assume-unchanged
         remember = update-index --no-assume-unchanged
 
+        expunge = "!sh -c 'git reflog expire --expire-unreachable=now --all && git gc --prune=now'"
         latest-tag = describe --abbrev=0 --tags
         sha-head = log --pretty=format:'%H' -1
         author-count = "! sh -c 'git shortlog -se | sort -r'"
         branch-list = "!sh -c 'git-branch-list.sh'"
-        prune-branches = "! sh -c 'git checkout master && git remote prune origin && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d'"
+        prune-branches = "! sh -c 'git checkout master && git remote prune origin && git branch --merged | grep -v \"\\*\" | grep -v \"master\" | grep -v \"develop\" | xargs -n 1 git branch -d'"
         ci = commit -v -a
         st = status
         reset-hard = reset --hard HEAD
@@ -32,6 +35,7 @@
         branch-current = rev-parse --symbolic-full-name --abbrev-ref HEAD
         number-of-commits-since-master = "! sh -c 'git log master..`git branch-current` --oneline | wc -l | tr -d \" \"'"
         number-of-commits-since-develop = "! sh -c 'git log develop..`git branch-current` --oneline | wc -l | tr -d \" \"'"
+        # pull-request-message = log  --reverse --pretty="format:## %s%n%n%b"
         squash = "! sh -c 'git rebase --interactive HEAD~`git number-of-commits-since-master`'"
         squash-develop = "! sh -c 'git rebase --interactive HEAD~`git number-of-commits-since-develop`'"
         tag-release = "! sh -c 'git tag `date \"+RELEASE-%Y-%m-%d-%H-%M-%S\"`'"
@@ -216,6 +220,7 @@
         elif (! git diff-index --quiet --cached HEAD) ; then \
         git fixws-index ; \
         fi"
+  recent = for-each-ref --count=5 --sort=-committerdate --format='%(refname:short)' refs/heads/
 
         # This simpler version does not work because 'git stash save'
         # does not create a stash when the tree is clean. In that case,
@@ -229,8 +234,6 @@
         # git stash pop
 
         ######################################################################
-[url "git@github.com:GITHUB_USERNAME/"]
-        insteadOf = "git://github.com/GITHUB_USERNAME/"
 [merge]
         summary = true
 [push]
@@ -262,3 +265,14 @@
         extendedRegexp = true
 [core]
         excludesfile = ~/.gitignore
+# [init]
+#   templatedir = /Users/jfriesen/Repositories/git_template/template
+[rebase]
+  stat = true
+[filter "media"]
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
+[gui]
+  pruneduringfetch = true
+  diffcontext = 7
