@@ -4,6 +4,6 @@ export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='7;31'
 export JAVA_HOME='/Library/Java/Home'
 export PWS="$HOME/.safe/pws"
-export EDITOR='subl -w'
-export VISUAL='subl -w'
+export EDITOR='atom --wait --one'
+export VISUAL='atom --wait --one'
 export RUBYLIB=".:test:$RUBYLIB"

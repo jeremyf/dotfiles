@@ -1,7 +1,6 @@
 alias kill-jetty='ps ax | grep jetty | grep -v grep | sed "s/^ *//g" | cut -f1 -d " " | xargs kill -9'
 alias ls='ls -Gal'
 alias file-count="find . -type f -print |wc -l"
-alias e="subl -n ."
 alias bx="bundle exec"
 alias g='guard'
 alias gl='git lg'
