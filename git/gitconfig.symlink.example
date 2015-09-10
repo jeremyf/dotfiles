@@ -14,6 +14,8 @@
 [hub]
         protocol = https
 [alias]
+        amend = "!sh -c 'GIT_EDITOR=vim git commit --amend'"
+        amend-no-change = "!sh -c 'git commit --amend -C `git sha-head`'"
         # http://ndlib.github.io/practices/make-git-forget-things/
         ban = branch --verbose --all --no-merged
         bam = branch --verbose --all --merged
@@ -61,7 +63,7 @@
         # Fix whitespace in the index while preserving a dirty tree, if
         # any.
         #
-        # Assuming your index is empty, some useful variations are: 
+        # Assuming your index is empty, some useful variations are:
         #
         # - fix whitespace in all changes in all versioned files:
         #
