@@ -38,4 +38,6 @@ Thumbs.db
 
 # CTags
 #######
-.tags
+.tags*
+
+.byebug_history
