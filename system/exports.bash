@@ -6,4 +6,4 @@ export JAVA_HOME='/Library/Java/Home'
 export PWS="$HOME/.safe/pws"
 export EDITOR='atom --wait --one'
 export VISUAL='atom --wait --one'
-export RUBYLIB=".:test:$RUBYLIB"
+# export RUBYLIB=".:test:$RUBYLIB"
