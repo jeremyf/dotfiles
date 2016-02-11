@@ -267,6 +267,8 @@
         extendedRegexp = true
 [core]
         excludesfile = ~/.gitignore
+[commit]
+        template = ~/.gitmessage
 # [init]
 #   templatedir = /Users/jfriesen/Repositories/git_template/template
 [rebase]
