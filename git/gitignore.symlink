@@ -41,3 +41,5 @@ Thumbs.db
 .tags*
 
 .byebug_history
+/jetty
+vendor/bundle

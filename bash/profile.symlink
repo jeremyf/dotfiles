@@ -31,5 +31,4 @@ done
 
 unset config_files
 
-
-export PATH="$HOME/.rvm/bin:$HOME/.rvm/rubies/ruby-2.2.2/bin:$PATH" # Add RVM to PATH for scripting
+eval "$(rbenv init -)"

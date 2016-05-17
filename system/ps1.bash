@@ -8,13 +8,10 @@ if [ -a `brew --prefix`/etc/bash_completion.d/git-prompt.sh ]; then
   GIT_PS1_SHOWUPSTREAM="auto"
   source `brew --prefix`/etc/bash_completion.d/git-prompt.sh
 
-  # No way of knowing for certain if rvm-prompt is available.
-  __rvm_ps1() {
-    if [ -a $HOME/.rvm/bin/rvm-prompt ]; then
-      echo " $($HOME/.rvm/bin/rvm-prompt v p g) "
-    else
-      echo ' '
-    fi
+  # No way of knowing for certain if rbenv is available.
+  __rbenv_ps1() {
+    rbenv_ruby_version=`rbenv version | sed -e 's/ .*//'`
+    echo " $rbenv_ruby_version "
   }
 
   # via http://tammersaleh.com/posts/a-better-rvm-bash-prompt
@@ -54,7 +51,7 @@ if [ -a `brew --prefix`/etc/bash_completion.d/git-prompt.sh ]; then
     local UC=$W                 # user's color
     [ $UID -eq "0" ] && UC=$R   # root's color
 
-    PS1="$G\w$R\$(__git_ps1)$B\$(__rvm_ps1)${NONE}$ "
+    PS1="$G\w$R\$(__git_ps1)$B\$(__rbenv_ps1)${NONE}$ "
   }
 
   bash_prompt
