@@ -31,4 +31,6 @@ done
 
 unset config_files
 
+export PATH="~/.rbenv/shims:$PATH"
+
 eval "$(rbenv init -)"

@@ -1,16 +1,8 @@
 
+
+
 ##----Title-----------------------------------50|
 ## Leave the next line blank
-
 ##----Message-------------------------------------------------------72|
-Why:
-
-*
-
-##--------------------------------------------------------------------|
-This change addresses the need by:
-
-*
-
-## Consider what Github issues this addresses
-##--------------------------------------------------------------------|
+## Explain why this change was made
+## Reference any Github issues that this may close or relate to

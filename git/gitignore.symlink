@@ -43,3 +43,4 @@ Thumbs.db
 .byebug_history
 /jetty
 vendor/bundle
+fcrepo4-test-data
