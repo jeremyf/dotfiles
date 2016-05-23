@@ -12,7 +12,7 @@ awesome, you might want to [read @holman's post on the subject](http://zachholma
 Run this:
 
 ```sh
-git clone https://github.com/jeremyf/dotfiles.git ~/Repositories/dotfiles
+git clone https://github.com/jeremyf/dotfiles.git ~/git/dotfiles
 cd ~/dotfiles
 script/bootstrap
 ```

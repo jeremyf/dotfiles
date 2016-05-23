@@ -270,7 +270,7 @@
 [commit]
         template = ~/.gitmessage
 # [init]
-#   templatedir = /Users/jfriesen/Repositories/git_template/template
+#   templatedir = /Users/jfriesen/git/git_template/template
 [rebase]
   stat = true
 [filter "media"]
