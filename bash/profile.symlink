@@ -31,6 +31,5 @@ done
 
 unset config_files
 
-export PATH="~/.rbenv/shims:$PATH"
-
+[ -f /Users/jfriesen/.travis/travis.sh ] && source /Users/jfriesen/.travis/travis.sh
 eval "$(rbenv init -)"
