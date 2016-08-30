@@ -7,3 +7,8 @@ fi
 if [ -d $DOTFILES/bin ]; then
   echo "$PATH" | grep -q "$DOTFILES/bin:" || export PATH="$DOTFILES/bin:$PATH"
 fi
+export GOROOT=/usr/local/opt/go/libexec/
+export GOPATH=$HOME/code_of_the_go
+if [ -d $GOPATH ]; then
+  echo "$PATH" | grep -q "$GOPATH" || export PATH="$PATH:$GOPATH/bin"
+fi

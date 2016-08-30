@@ -280,3 +280,11 @@
 [gui]
   pruneduringfetch = true
   diffcontext = 7
+# Requires /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight to be
+# in the PATH
+[pager]
+	log = diff-highlight | less
+	show = diff-highlight | less
+	diff = diff-highlight | less
+[interactive]
+	diffFilter = diff-highlight
