@@ -22,6 +22,7 @@
         forget = update-index --assume-unchanged
         remember = update-index --no-assume-unchanged
 
+        please = push -u --force-with-lease
         expunge = "!sh -c 'git reflog expire --expire-unreachable=now --all && git gc --prune=now'"
         latest-tag = describe --abbrev=0 --tags
         sha-head = log --pretty=format:'%H' -1
