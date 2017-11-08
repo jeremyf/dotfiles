@@ -31,5 +31,7 @@ done
 
 unset config_files
 
+# From brew install pass
+[ -f /usr/local/etc/bash_completion.d/pass ] && source /usr/local/etc/bash_completion.d/pass
 [ -f /Users/jfriesen/.travis/travis.sh ] && source /Users/jfriesen/.travis/travis.sh
 eval "$(rbenv init -)"
