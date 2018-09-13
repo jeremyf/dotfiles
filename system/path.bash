@@ -1,3 +1,6 @@
+if [ -d /usr/local/opt/mysql@5.7/bin ]; then
+  echo "$PATH" | grep -q "/usr/local/opt/mysql@5.7/bin:" || export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+fi
 if [ -d $HOME/bin ]; then
   echo "$PATH" | grep -q "$HOME/bin:" || export PATH="$HOME/bin:$PATH"
 fi

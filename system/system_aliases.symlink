@@ -27,3 +27,9 @@ alias dns-flush="dscacheutil -flushcache"
 alias net_traffic="lsof -r -i"
 alias mail-vacuum="/usr/bin/sqlite3 ~/Library/Mail/Envelope\\ Index vacuum"
 alias mail-check="/usr/bin/sqlite3 ~/Library/Mail/Envelope\\ Index 'PRAGMA integrity_check'"
+
+# `awsassumerole testlibnd-superAdmin` (see ~/.aws/config for profile)
+awsassumerole(){
+  unset AWS_VAULT
+  export $(aws-vault exec $1 --assume-role-ttl 1h -- env | grep AWS)
+}
