@@ -19,8 +19,6 @@ alias ssh-prod='ssh rbprod@rprod.library.nd.edu'
 alias hb="hub browse"
 alias p="project"
 alias disk-repair="sudo /usr/libexec/repair_packages --repair --standard-pkgs --volume /"
-alias open_last_post="atom $HOME/git/takeonrules.github.io-source/_posts/`ls $HOME/git/takeonrules.github.io-source/_posts/ | tail -1`"
-
 
 # SSH Tunnel:
 # ssh libvirt6.library.nd.edu -L 8080:localhost:8080
