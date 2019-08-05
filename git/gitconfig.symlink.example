@@ -268,7 +268,7 @@
         extendedRegexp = true
 [core]
         excludesfile = ~/.gitignore
-        editor = atom --wait
+        editor = atom --wait --clear-window-state -n
         pager = `brew --prefix git`/share/git-core/contrib/diff-highlight/diff-highlight | less
 # [init]
 #   templatedir = /Users/jfriesen/git/git_template/template

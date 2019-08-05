@@ -67,7 +67,7 @@ if project_name
   #   # Working with the file system, I may need to wait.
   #   sleep(1)
   # end
-  `atom #{repository_dirname}`
+  `atom #{repository_dirname} -n --clear-window-state --wait`
   exit(0)
 else
   $stdout.puts "Example `#{File.basename(__FILE__)} project_name`"
