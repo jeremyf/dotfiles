@@ -11,18 +11,16 @@
         user = GITHUB_USERNAME
 [url "git@github.com:GITHUB_USERNAME/"]
         insteadOf = "git://github.com/GITHUB_USERNAME/"
-[hub]
-        protocol = https
-[alias]
-        amend = "!sh -c 'GIT_EDITOR=vim git commit --amend'"
-        amend-no-change = "!sh -c 'git commit --amend -C `git sha-head`'"
-        # http://ndlib.github.io/practices/make-git-forget-things/
-        ban = branch --verbose --all --no-merged
-        bam = branch --verbose --all --merged
-        forget = update-index --assume-unchanged
-        remember = update-index --no-assume-unchanged
 
+[gc]
+        reflogExpireUnreachable = 3 days
+[alias]
+        amend = commit --amend
+        amend-no-change = "!sh -c 'git commit --amend -C `git sha-head`'"
+        prebase = "!sh -c 'git fetch; git rebase --rebase-merges; git pull --tags'"
+        tag-dates = log --tags --simplify-by-decoration --pretty='format:%ai %d'
         please = push -u --force-with-lease
+        current-tag = describe --abbrev=0 --tags
         expunge = "!sh -c 'git reflog expire --expire-unreachable=now --all && git gc --prune=now'"
         latest-tag = describe --abbrev=0 --tags
         sha-head = log --pretty=format:'%H' -1
@@ -33,23 +31,15 @@
         st = status
         reset-hard = reset --hard HEAD
         undo = reset --soft HEAD
-        ba = branch -a -vv
+        ba = branch -avv
         co = checkout
         branch-current = rev-parse --symbolic-full-name --abbrev-ref HEAD
         number-of-commits-since-master = "! sh -c 'git log master..`git branch-current` --oneline | wc -l | tr -d \" \"'"
-        number-of-commits-since-develop = "! sh -c 'git log develop..`git branch-current` --oneline | wc -l | tr -d \" \"'"
         # pull-request-message = log  --reverse --pretty="format:## %s%n%n%b"
         squash = "! sh -c 'git rebase --interactive HEAD~`git number-of-commits-since-master`'"
-        squash-develop = "! sh -c 'git rebase --interactive HEAD~`git number-of-commits-since-develop`'"
-        tag-release = "! sh -c 'git tag `date \"+RELEASE-%Y-%m-%d-%H-%M-%S\"`'"
-        release = "! sh -c 'git push origin master:release; git tag-release'"
-        repull = "! sh -c 'git stash && git pull --rebase'"
-        sync = "! sh -c 'git repull && git push'"
-        sync-pop = "! sh -c 'git sync && git stash pop'"
-        sp = "! sh -c 'git sync && git stash pop'"
         plog = log --pretty=format:'%h\t%Cblue%cr%Creset\t%cn\t%Cgreen%s%Creset'
-        unmerged-edit = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; subl `f`"
-        edit = "! sh -c 'git status --porcelain | sed \"s/^...//\" | xargs subl'"
+        unmerged-edit = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; atom `f` --wait --one"
+        edit = "! sh -c 'git status --porcelain | sed \"s/^...//\" | xargs atom --wait --one'"
         unmerged-add = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
         unstage = reset HEAD --
         lg = log --graph --pretty=format:'%C(red)%h%Creset — %Creset%s %C(blue)%an, %C(green)(%ar)%Creset'
@@ -223,7 +213,9 @@
         elif (! git diff-index --quiet --cached HEAD) ; then \
         git fixws-index ; \
         fi"
-  recent = for-each-ref --count=5 --sort=-committerdate --format='%(refname:short)' refs/heads/
+	recent = for-each-ref --count=5 --sort=-committerdate --format='%(refname:short)' refs/heads/
+	oldest-ancestor = !zsh -c 'diff --old-line-format= --new-line-format= <(git rev-list --first-parent \"${1:-master}\") <(git rev-list --first-parent \"${2:-HEAD}\") | head -1' -
+	branchlog = !sh -c \"git log `git oldest-ancestor`..\"
 
         # This simpler version does not work because 'git stash save'
         # does not create a stash when the tree is clean. In that case,
@@ -247,11 +239,17 @@
         branch = auto
         diff = auto
         status = auto
+        interactive = auto
 [color "branch"]
         current = red reverse
         local = red bold
         remote = yellow
 [color "diff"]
+        meta = yellow bold
+        frag = magenta bold
+        old = red bold
+        new = green bold
+[color "interactive"]
         meta = yellow bold
         frag = magenta bold
         old = red bold
@@ -268,24 +266,20 @@
         extendedRegexp = true
 [core]
         excludesfile = ~/.gitignore
-        editor = atom --wait --clear-window-state -n
+        editor = atom --wait -n --clear-window-state
         pager = `brew --prefix git`/share/git-core/contrib/diff-highlight/diff-highlight | less
+#[commit]
+#        template = ~/.gitmessage
 # [init]
-#   templatedir = /Users/jfriesen/git/git_template/template
+# 	templatedir = /Users/jfriesen/Repositories/git_template/template
 [rebase]
-  stat = true
+        stat = true
 [filter "media"]
-  required = true
-  clean = git media clean %f
-  smudge = git media smudge %f
+        required = true
+        clean = git media clean %f
+        smudge = git media smudge %f
 [gui]
-  pruneduringfetch = true
-  diffcontext = 7
-# Requires /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight to be
-# in the PATH
-[pager]
-	log = diff-highlight | less
-	show = diff-highlight | less
-	diff = diff-highlight | less
+        pruneduringfetch = true
+        diffcontext = 7
 [interactive]
-	diffFilter = diff-highlight
+        diffFilter = `brew --prefix git`/share/git-core/contrib/diff-highlight/diff-highlight
