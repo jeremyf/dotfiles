@@ -12,8 +12,6 @@ set output-meta on
 set convert-meta off
 set visible-stats on
 
-Space: magic-space
-
 "\e[5~": beginning-of-history # Page Up
 "\e[6~": end-of-history       # Page Down
 
