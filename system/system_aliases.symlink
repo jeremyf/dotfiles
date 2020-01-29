@@ -21,9 +21,9 @@ alias p="project"
 alias disk-repair="sudo /usr/libexec/repair_packages --repair --standard-pkgs --volume /"
 
 # Hyrax aliases
-alias devup='fcrepo_wrapper & solr_wrapper & bundle exec sidekiq & redis-server &'
-alias testup='fcrepo_wrapper --config config/fcrepo_wrapper_test.yml & solr_wrapper --config config/solr_wrapper_test.yml & bundle exec sidekiq & redis-server &'
-alias devdown='sudo pkill -f wrapper & sudo pkill -f sidekiq & redis-cli shutdown'
+alias hyrax-devup='fcrepo_wrapper & solr_wrapper & bundle exec sidekiq & redis-server &'
+alias hyrax-testup='fcrepo_wrapper --config config/fcrepo_wrapper_test.yml & solr_wrapper --config config/solr_wrapper_test.yml & bundle exec sidekiq & redis-server &'
+alias hyrax-devdown='sudo pkill -f wrapper & sudo pkill -f sidekiq & redis-cli shutdown'
 
 # SSH Tunnel:
 # ssh libvirt6.library.nd.edu -L 8080:localhost:8080
